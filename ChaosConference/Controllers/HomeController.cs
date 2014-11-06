@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using ChaosConference.Lib;
 
 namespace ChaosConference.Controllers
@@ -10,7 +11,7 @@ namespace ChaosConference.Controllers
         {
             if (string.IsNullOrEmpty(Common.ConferenceNumber) || string.IsNullOrEmpty(Common.Domain))
             {
-                return Content("Please set up environment variables for the app");
+                return Content("Please set up environment variables or web.config for the app");
             }
             return Content("This app is ready to use");
         }

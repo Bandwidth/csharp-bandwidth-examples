@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ChaosConference.Lib;
 
 namespace ChaosConference
 {
@@ -11,7 +12,8 @@ namespace ChaosConference
         {
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
+            RouteConfig.RegisterRoutes(RouteTable.Routes); 
+            Common.SetupClient();
         }
     }
 }
