@@ -1,16 +1,14 @@
-﻿using System;
-using System.Web.Mvc;
-using Bandwidth.Net.Model;
-using ChaosConference.Lib;
+﻿using System.Web.Mvc;
+using DolphinApp.Lib;
 
-namespace ChaosConference.Controllers
+namespace DolphinApp.Controllers
 {
     public class HomeController : Controller
     {
         // GET: Home
         public ActionResult Index()
         {
-            if (string.IsNullOrEmpty(Common.ConferenceNumber) || string.IsNullOrEmpty(Common.Domain))
+            if (string.IsNullOrEmpty(Common.Caller) || string.IsNullOrEmpty(Common.Domain) || string.IsNullOrEmpty(Common.BridgeCallee))
             {
                 return Content("Please set up environment variables or fill web.config for the app");
             }

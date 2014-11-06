@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Configuration;
 
-namespace ChaosConference.Lib
+namespace DolphinApp.Lib
 {
     public static class Common
     {
-        public static readonly string ConferenceNumber = Environment.GetEnvironmentVariable("CONFERENCE_NUMBER") ?? ConfigurationManager.AppSettings["conferenceNumber"];
+        public static readonly string Caller = Environment.GetEnvironmentVariable("CALLER_NUMBER") ?? ConfigurationManager.AppSettings["callerNumber"];
+        public static readonly string BridgeCallee = Environment.GetEnvironmentVariable("BRIDGE_CALLEE") ?? ConfigurationManager.AppSettings["bridgeCallee"];
+        
         public static readonly string Domain = Environment.GetEnvironmentVariable("DOMAIN") ?? ConfigurationManager.AppSettings["domain"];
         public static void SetupClient()
         {
