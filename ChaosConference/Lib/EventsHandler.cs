@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -37,7 +38,7 @@ namespace ChaosConference.Lib
 
         public static Task ProcessEvent(BaseEvent ev, UrlHelper url, HttpContextBase context)
         {
-            Console.WriteLine("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl);
+            Trace.WriteLine(string.Format("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl), "Events");
             return Task.Run(() => { });
         }
     }
@@ -81,7 +82,7 @@ namespace ChaosConference.Lib
         }
         public static Task ProcessEvent(BaseEvent ev, UrlHelper url, HttpContextBase context)
         {
-            Console.WriteLine("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl);
+            Trace.WriteLine(string.Format("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl), "Events");
             return Task.Run(() => { });
         }
     }
@@ -102,7 +103,7 @@ namespace ChaosConference.Lib
         }
         public static Task ProcessEvent(BaseEvent ev, UrlHelper url, HttpContextBase context)
         {
-            Console.WriteLine("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl);
+            Trace.WriteLine(string.Format("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl), "Events");
             return Task.Run(() => { });
         }
     }

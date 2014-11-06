@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -14,6 +15,8 @@ namespace ChaosConference
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes); 
             Common.SetupClient();
+            Trace.Listeners.Add(new IisTraceListener());
+            Trace.Listeners.Add(new ConsoleTraceListener());
         }
     }
 }

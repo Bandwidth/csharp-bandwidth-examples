@@ -18,6 +18,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 
+#data
+[Aa]pp_[Dd]ata
 # Roslyn cache directories
 *.ide/
 
