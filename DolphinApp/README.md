@@ -28,6 +28,8 @@ Open in browser Azure website dashboard and switch to tab "Configure".
 
 Fill app settings like in picture bellow. Fill setting `DOMAIN` by azure web site domain.
 
+![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/dolphin-app-config.png)
+
 Press button "Save" to apply changes.
 
 ## Deploy
@@ -36,14 +38,21 @@ Click right button on project "DolphinApp" in Visual Studio and select menu item
 
 Select target "Microsoft Azure Website", sign in on Azure (if need) and select site on Azure where this project will be hosted.
 
+![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/select-target.png)
+
+![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/select-site.png)
+
 Press "Publish"
 
 After publishing browser with site will be started. Please check if it shows text "This app is ready to use"
+
+![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/ready.png)
 
 
 ## Demo
 
 Start incoming call from command line:
+
 ```console
 curl -d '{"to": "+YOUR-NUMBER"}' http://YOUR-AZURE-DOMAIN/start/demo --header "Content-Type:application/json"
 ```
