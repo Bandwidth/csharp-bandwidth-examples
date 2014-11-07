@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Configuration;
+using System.Web.Mvc;
 using DolphinApp.Lib;
 
 namespace DolphinApp.Controllers
