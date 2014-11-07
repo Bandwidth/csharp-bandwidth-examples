@@ -34,7 +34,7 @@ Press button "Save" to apply changes.
 
 ## Deploy
 
-Click right button on project "DolphinApp" in Visual Studio and select menu item "Deploy"
+Click right button on project "DolphinApp" in Visual Studio and select menu item "Publish"
 
 Select target "Microsoft Azure Website", sign in on Azure (if need) and select site on Azure where this project will be hosted.
 
