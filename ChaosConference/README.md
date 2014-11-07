@@ -30,7 +30,7 @@ Open in browser Azure website dashboard and switch to tab "Configure".
 
 Fill app settings like in picture bellow. Fill setting `DOMAIN` by azure web site domain.
 
-![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/chaos-conference-config.png)
+![](/images/chaos-conference-config.png)
 
 Press button "Save" to apply changes.
 
@@ -40,15 +40,15 @@ Click right button on project "ChaosConference" in Visual Studio and select menu
 
 Select target "Microsoft Azure Website", sign in on Azure (if need) and select site on Azure where this project will be hosted.
 
-![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/select-target.png)
+![](/images/select-target.png)
 
-![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/select-site.png)
+![](/images/select-site.png)
 
 Press "Publish"
 
 After publishing browser with site will be started. Please check if it shows text "This app is ready to use"
 
-![](https://github.com/github/bandwidthcom/csharp-bandwidth-examples/master/images/ready.png)
+![](/images/ready.png)
 
 ## Demo
 
