@@ -28,7 +28,7 @@ Create new web site on Azure (if need, .Net 4.5)
 
 Open in browser Azure website dashboard and switch to tab "Configure".
 
-Fill app settings like in picture bellow. Fill setting `DOMAIN` by azure web site domain.
+Fill app settings like on the picture. Fill setting `DOMAIN` with azure web site domain.
 
 ![](/images/chaos-conference-config.png)
 
