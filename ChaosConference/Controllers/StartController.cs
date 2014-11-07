@@ -17,7 +17,7 @@ namespace ChaosConference.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "number field is required");
             }
-            var callbackUrl = string.Format("http://{0}{1}", Common.Domain, Url.Action("FirstMember", "Events"));
+            var callbackUrl = string.Format("http://{0}{1}", Common.Domain, Url.Action("first_member", "Events"));
             await Call.Create(new Dictionary<string, object>
             {
                 {"from", Common.ConferenceNumber},

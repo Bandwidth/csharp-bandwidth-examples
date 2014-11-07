@@ -25,7 +25,7 @@ namespace ChaosConference.Controllers
             return Json(new object());
         }
 
-        // POST: events/other_call_events
+        // POST: events/conference
         [HttpPost, ExtractEvent]
         public async Task<ActionResult> Conference()
         {
