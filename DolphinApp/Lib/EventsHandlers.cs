@@ -57,7 +57,7 @@ namespace DolphinApp.Lib
                     {"interDigitTimeout", "7"},
                     {"prompt", new Dictionary<string, object>{
                         {"sentence", "Press 1 to speak with the fish, press 2 to let it go"},
-                        {"loop_enabled", true},
+                        {"loopEnabled", true},
                         {"voice", "Kate"}
                     }},
                     {"tag", "gather_started"}

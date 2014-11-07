@@ -21,7 +21,7 @@ namespace ChaosConference.Controllers
         public async Task<ActionResult> OtherCallEvents()
         {
             Trace.WriteLine("OtherCallEvents()", "Events");
-            await CallEventsHandler.ProcessEvent(ViewBag.Event, Url, HttpContext);
+            await OtherMembersEventsHandler.ProcessEvent(ViewBag.Event, Url, HttpContext);
             return Json(new object());
         }
 

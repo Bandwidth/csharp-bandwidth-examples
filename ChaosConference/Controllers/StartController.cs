@@ -17,13 +17,14 @@ namespace ChaosConference.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "number field is required");
             }
-            var callbackUrl = string.Format("http://{0}{1}", Common.Domain, Url.Action("first_member", "Events"));
+            var callbackUrl = string.Format("http://{0}{1}", Common.Domain, Url.Action((string.IsNullOrEmpty(payload.ConferenceOwner)) ? "first_member" : "other_call_events", "Events"));
             await Call.Create(new Dictionary<string, object>
             {
                 {"from", Common.ConferenceNumber},
                 {"to", payload.To},
                 {"callbackUrl", callbackUrl},
-                {"recordingEnabled", false}
+                {"recordingEnabled", false},
+                {"tag", payload.ConferenceOwner}
             });
             return new HttpStatusCodeResult(HttpStatusCode.Created);
         }
@@ -32,5 +33,6 @@ namespace ChaosConference.Controllers
     public class DemoPayload
     {
         public string To { get; set; }
+        public string ConferenceOwner { get; set; }
     }
 }
