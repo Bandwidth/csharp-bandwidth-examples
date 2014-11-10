@@ -13,13 +13,13 @@ namespace DolphinApp.Lib
     {
         public async static Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             await call.SpeakSentence("hello flipper", "hello-state");
         }
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             switch (ev.Tag)
             {
                 case "gather_complete":
@@ -47,7 +47,7 @@ namespace DolphinApp.Lib
         public static async Task ProcessEvent(PlaybackEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             if (ev.Tag == "dolphin-state")
             {
                 await call.CreateGather(new Dictionary<string, object>
@@ -57,7 +57,7 @@ namespace DolphinApp.Lib
                     {"interDigitTimeout", "7"},
                     {"prompt", new Dictionary<string, object>{
                         {"sentence", "Press 1 to speak with the fish, press 2 to let it go"},
-                        {"loopEnabled", true},
+                        {"loopEnabled", false},
                         {"voice", "Kate"}
                     }},
                     {"tag", "gather_started"}
@@ -68,7 +68,7 @@ namespace DolphinApp.Lib
         public static async Task ProcessEvent(GatherEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Tag != "gather_started" || ev.Reason == "hung-up") return;
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             if (ev.Digits.StartsWith("1"))
             {
                 await call.SpeakSentence("Please stay on the line. Your call is being connected.", "gather_complete");
@@ -92,7 +92,7 @@ namespace DolphinApp.Lib
     {
         public static async Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             var otherCallId = ev.Tag.Split(':').LastOrDefault();
             await
                 call.SpeakSentence("You have a dolphin on line 1. Watch out, he's hungry!",
@@ -115,7 +115,7 @@ namespace DolphinApp.Lib
         public async static Task ProcessEvent(HangupEvent ev, UrlHelper url, HttpContextBase context)
         {
             var otherCallId = ev.Tag.Split(':').LastOrDefault();
-            var call = await Call.Get(otherCallId);
+            var call = new Call{Id = otherCallId};
             if (ev.Cause == "CALL_REJECTED")
             {
                 await call.SpeakSentence("We are sorry, the user is reject your call", "terminating");

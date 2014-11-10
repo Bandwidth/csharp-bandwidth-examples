@@ -13,14 +13,14 @@ namespace ChaosConference.Lib
     {
         public async static Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             await call.SpeakSentence("Welcome to the conference");
         }
 
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             var conferenceUrl = string.Format("http://{0}{1}", Common.Domain, url.Action("Conference", "Events"));
             var conference = await Conference.Create(new Dictionary<string, object>
             {
@@ -46,7 +46,7 @@ namespace ChaosConference.Lib
     {
         public static async Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             var conferenceId = context.Application.Get(string.Format("active-conf-{0}", call.To)) as string;
             if (conferenceId != null)
             {
@@ -63,7 +63,7 @@ namespace ChaosConference.Lib
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             if (ev.Tag == "terminating")
             {
                 await call.HangUp();
@@ -104,7 +104,7 @@ namespace ChaosConference.Lib
         public static async Task ProcessEvent(ConferenceMemberEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
-            var call = await Call.Get(ev.CallId);
+            var call = new Call{Id = ev.CallId};
             await call.SpeakSentence(string.Format("You are the {0} caller to join the conference.", ToOrdinalNumber(ev.ActiveMembers)), "notification");
         }
 
