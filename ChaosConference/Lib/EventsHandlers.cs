@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +14,7 @@ namespace ChaosConference.Lib
         public async static Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
             var call = await Call.Get(ev.CallId);
-            await call.SpeakSentence("Hello! You will be the first member of the conference");
+            await call.SpeakSentence("Welcome to the conference");
         }
 
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
@@ -48,13 +47,7 @@ namespace ChaosConference.Lib
         public static async Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
             var call = await Call.Get(ev.CallId);
-            if (string.IsNullOrEmpty(ev.Tag))
-            {
-                await
-                    call.SpeakSentence("We are sorry, you forgot to pass conference owner number", "terminating");
-                return;
-            }
-            var conferenceId = context.Application.Get(string.Format("active-conf-{0}", ev.Tag)) as string;
+            var conferenceId = context.Application.Get(string.Format("active-conf-{0}", call.To)) as string;
             if (conferenceId != null)
             {
                 await
@@ -77,10 +70,6 @@ namespace ChaosConference.Lib
             }
             else
             {
-                if (ev.Tag == "notification")
-                {
-                    return;
-                }
                 var conferenceId = ev.Tag.Split(':').LastOrDefault();
                 var conference = await Conference.Get(conferenceId);
                 await conference.CreateMember(new Dictionary<string, object>
@@ -114,9 +103,21 @@ namespace ChaosConference.Lib
 
         public static async Task ProcessEvent(ConferenceMemberEvent ev, UrlHelper url, HttpContextBase context)
         {
+            if (ev.Status != "done") return;
             var call = await Call.Get(ev.CallId);
-            await call.SpeakSentence(string.Format("You are member number {0} in the conference", ev.ActiveMembers), "notification");
+            await call.SpeakSentence(string.Format("You are the {0} caller to join the conference.", ToOrdinalNumber(ev.ActiveMembers)), "notification");
         }
+
+        private static string ToOrdinalNumber(int count)
+        {
+            if (count >= Ordinals.Length)
+            {
+                return string.Format("{0}th", count);
+            }
+            return Ordinals[count];
+        }
+        private static readonly string[] Ordinals = {"owner", "first", "second", "third", "fourth", "fifth"};
+
         public static Task ProcessEvent(BaseEvent ev, UrlHelper url, HttpContextBase context)
         {
             Trace.WriteLine(string.Format("Unhandled event of type '{0}' for {1} {2}", ev.EventType, context.Request.HttpMethod, context.Request.RawUrl), "Events");
