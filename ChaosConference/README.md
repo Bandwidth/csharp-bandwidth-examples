@@ -15,7 +15,7 @@ You need to have
     - Common Azure Tools for Visual Studio
 
 
-## Setup
+## Build and Deploy
 
 #### Clone the repository
 
@@ -24,27 +24,23 @@ git clone https://github.com/bandwidthcom/csharp-bandwidth-examples
 ```
 Open solution file in Visual Studio and make "Rebuid all"
 
-Create new web site on Azure (if need, .Net 4.5)
-
-Open in browser Azure website dashboard and switch to tab "Configure".
-
-Fill app settings like on the picture. Fill setting `DOMAIN` with azure web site domain.
-
-![](/images/chaos-conference-config.png)
-
-Press button "Save" to apply changes.
-
-## Deploy
+Fill app settings (you can find them in web.config.sample bellow comment `Fill settings here`)
 
 Click right button on project "ChaosConference" in Visual Studio and select menu item "Publish"
 
-Select target "Microsoft Azure Website", sign in on Azure (if need) and select site on Azure where this project will be hosted.
-
 ![](/images/select-target.png)
+
+Select target "Microsoft Azure Website", sign in on Azure (if need).
 
 ![](/images/select-site.png)
 
-Press "Publish"
+Press button "New" to create new site on azure.
+
+![](/images/new-site.png)
+
+Fill site's options and press button "Create".
+
+Press "Publish" to deploy this app to created site.
 
 After publishing browser with site will be started. Please check if it shows text "This app is ready to use"
 
