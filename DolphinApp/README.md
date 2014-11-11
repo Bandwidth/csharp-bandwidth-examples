@@ -1,6 +1,6 @@
-# Chaos Conference
+# Dolphin App
 
-Simple Flask application for handling calls.
+A Simple App that shows how to use DTMF, audio and speaking in a call
 
 
 ## Getting started
