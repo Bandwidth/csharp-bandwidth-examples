@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,12 +14,17 @@ namespace DolphinApp.Lib
     {
         public async static Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
+            Trace.WriteLine("AnswerEvent", "Events");
             var call = new Call{Id = ev.CallId};
+            Thread.Sleep(3000);
             await call.SpeakSentence("hello flipper", "hello-state");
         }
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
+            
+            Trace.WriteLine("SpeakEvent", "Events");
+            
             var call = new Call{Id = ev.CallId};
             switch (ev.Tag)
             {
@@ -44,9 +50,24 @@ namespace DolphinApp.Lib
             }
         }
 
+        public static async Task ProcessEvent(DtmfEvent ev, UrlHelper url, HttpContextBase context)
+        {
+            Trace.WriteLine(string.Format("DtmfEvent {0}", ev.DtmfDigit), "Events");
+            var call = new Call { Id = ev.CallId };
+            if (ev.DtmfDigit.StartsWith("1"))
+            {
+                await call.SpeakSentence("Please stay on the line. Your call is being connected.", "gather_complete");
+            }
+            else
+            {
+                await call.SpeakSentence("This call will be terminated", "terminating");
+            }
+        }
+
         public static async Task ProcessEvent(PlaybackEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
+            Trace.WriteLine("PlaybackEvent", "Events");
             var call = new Call{Id = ev.CallId};
             if (ev.Tag == "dolphin-state")
             {
@@ -54,7 +75,7 @@ namespace DolphinApp.Lib
                 {
                     {"maxDigits", "5"},
                     {"terminatingDigits", "*"},
-                    {"interDigitTimeout", "7"},
+                    {"interDigitTimeout", "3"},
                     {"prompt", new Dictionary<string, object>{
                         {"sentence", "Press 1 to speak with the fish, press 2 to let it go"},
                         {"loopEnabled", false},
@@ -65,20 +86,7 @@ namespace DolphinApp.Lib
             }
         }
 
-        public static async Task ProcessEvent(GatherEvent ev, UrlHelper url, HttpContextBase context)
-        {
-            if (ev.Tag != "gather_started" || ev.Reason == "hung-up") return;
-            var call = new Call{Id = ev.CallId};
-            if (ev.Digits.StartsWith("1"))
-            {
-                await call.SpeakSentence("Please stay on the line. Your call is being connected.", "gather_complete");
-            }
-            else
-            {
-                await call.SpeakSentence("This call will be terminated", "terminating");
-            }
-        }
-
+        
 
 
         public static Task ProcessEvent(BaseEvent ev, UrlHelper url, HttpContextBase context)
@@ -92,8 +100,10 @@ namespace DolphinApp.Lib
     {
         public static async Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
+            Trace.WriteLine("Bridged-AnswerEvent", "Events");
             var call = new Call{Id = ev.CallId};
             var otherCallId = ev.Tag.Split(':').LastOrDefault();
+            Thread.Sleep(3000);
             await
                 call.SpeakSentence("You have a dolphin on line 1. Watch out, he's hungry!",
                     string.Format("warning:{0}", otherCallId));
@@ -102,6 +112,7 @@ namespace DolphinApp.Lib
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
+            Trace.WriteLine("Bridged-SpeakEvent", "Events");
             if (ev.Tag.StartsWith("warning"))
             {
                 var otherCallId = ev.Tag.Split(':').LastOrDefault();
@@ -114,6 +125,7 @@ namespace DolphinApp.Lib
 
         public async static Task ProcessEvent(HangupEvent ev, UrlHelper url, HttpContextBase context)
         {
+            Trace.WriteLine("Bridged-HangupEvent", "Events");
             var otherCallId = ev.Tag.Split(':').LastOrDefault();
             var call = new Call{Id = otherCallId};
             if (ev.Cause == "CALL_REJECTED")

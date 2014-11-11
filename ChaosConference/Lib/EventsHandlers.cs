@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +16,7 @@ namespace ChaosConference.Lib
         {
             var call = new Call{Id = ev.CallId};
             Trace.WriteLine("FirstMember-AnswerEvent", "Events");
+            Thread.Sleep(3000);
             await call.SpeakSentence("Welcome to the conference");
         }
 
@@ -51,6 +53,7 @@ namespace ChaosConference.Lib
             Trace.WriteLine("Other-AnswerEvent", "Events");
             var call = new Call{Id = ev.CallId};
             var conferenceId = context.Application.Get(string.Format("active-conf-{0}", ev.Tag)) as string;
+            Thread.Sleep(3000);
             if (conferenceId != null)
             {
                 await

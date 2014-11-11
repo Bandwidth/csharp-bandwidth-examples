@@ -25,6 +25,7 @@ namespace DolphinApp.Lib
             catch (Exception ex)
             {
                 Debugger.Log(0, "Error", ex.Message);
+                Trace.WriteLine(ex.Message, "Error");
                 filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Malformed event");
                 return;
             }

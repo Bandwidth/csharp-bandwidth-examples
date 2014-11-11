@@ -19,7 +19,7 @@
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
 
     <!-- Fill settings here -->
-    <add key="callerNumberNumber" value=""/>
+    <add key="callerNumber" value=""/>
     <add key="bridgeCallee" value=""/>
     <add key="domain" value=""/>
     <add key="userId" value=""/>
