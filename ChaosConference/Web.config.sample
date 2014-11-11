@@ -19,8 +19,6 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="conferenceNumber" value=""/>
-    <add key="reserveConferenceNumber" value=""/>
-    <add key="secondMemberNumber" value="" />
     <add key="domain" value=""/>
     <add key="userId" value=""/>
     <add key="apiToken" value=""/>

@@ -52,7 +52,7 @@ namespace ChaosConference.Lib
         {
             Trace.WriteLine("Other-AnswerEvent", "Events");
             var call = new Call{Id = ev.CallId};
-            var conferenceId = context.Application.Get(string.Format("active-conf-{0}", ev.Tag)) as string;
+            var conferenceId = context.Application.Get(string.Format("active-conf-{0}", Common.ConferenceNumber)) as string;
             Thread.Sleep(3000);
             if (conferenceId != null)
             {
@@ -99,18 +99,18 @@ namespace ChaosConference.Lib
 
     public static class ConferenceEventsHandler
     {
-        public static async Task ProcessEvent(ConferenceEvent ev, UrlHelper url, HttpContextBase context)
+        public static Task ProcessEvent(ConferenceEvent ev, UrlHelper url, HttpContextBase context)
         {
             Trace.WriteLine(string.Format("Conference-Conference {0}", ev.Id), "Events");
-            var conference = await Conference.Get(ev.ConferenceId);
             if (ev.Status == "created")
             {
-                context.Application.Set(string.Format("active-conf-{0}", conference.From), conference.Id);
+                context.Application.Set(string.Format("active-conf-{0}", Common.ConferenceNumber), ev.ConferenceId);
             }
             else
             {
-                context.Application.Remove(string.Format("active-conf-{0}", conference.From));
+                context.Application.Remove(string.Format("active-conf-{0}", Common.ConferenceNumber));
             }
+            return Task.Run(() => { });
         }
 
         public static async Task ProcessEvent(ConferenceMemberEvent ev, UrlHelper url, HttpContextBase context)

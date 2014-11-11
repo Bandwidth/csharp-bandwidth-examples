@@ -7,8 +7,6 @@ namespace ChaosConference.Lib
     {
         public static readonly string ConferenceNumber = Environment.GetEnvironmentVariable("CONFERENCE_NUMBER") ?? ConfigurationManager.AppSettings["conferenceNumber"];
         public static readonly string Domain = Environment.GetEnvironmentVariable("DOMAIN") ?? ConfigurationManager.AppSettings["domain"];
-        public static readonly string  SecondMemberNumber = Environment.GetEnvironmentVariable("SECOND_MEMBER_NUMBER") ?? ConfigurationManager.AppSettings["secondMemberNumber"];
-        public static readonly string ReserveConferenceNumber = Environment.GetEnvironmentVariable("RESERVE_CONFERENCE_NUMBER") ?? ConfigurationManager.AppSettings["reserveConferenceNumber"];
         
         public static void SetupClient()
         {
