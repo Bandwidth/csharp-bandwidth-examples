@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Bandwidth.Net;
 using Bandwidth.Net.Model;
 using ChaosConference.Lib;
 
@@ -17,7 +19,7 @@ namespace ChaosConference.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "number field is required");
             }
-            var callbackUrl = string.Format("http://{0}/{1}", Common.Domain, Url.Action("first_member", "Events"));
+            var callbackUrl = string.Format("http://{0}{1}", Common.Domain, Url.Action("first_member", "Events"));
             await Call.Create(new Dictionary<string, object>
             {
                 {"from", Common.ConferenceNumber},
@@ -30,19 +32,32 @@ namespace ChaosConference.Controllers
 
         // POST: start/demo
         [HttpPost]
-        public async Task<ActionResult> Join(JoinPayload payload)
+        public async Task<ActionResult> Join()
         {
-            if (payload == null || string.IsNullOrEmpty(payload.To) || string.IsNullOrEmpty(payload.From))
+            var callbackUrl = string.Format("http://{0}{1}", Common.Domain, Url.Action("other_call_events", "Events"));
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "number fields are required");
+                await Call.Create(new Dictionary<string, object>
+                {
+                    {"from", Common.SecondMemberNumber},
+                    {"to", Common.ConferenceNumber},
+                    {"callbackUrl", callbackUrl},
+                    {"recordingEnabled", false},
+                    {"tag", Common.ConferenceNumber}
+                });
+                return new HttpStatusCodeResult(HttpStatusCode.Created);
             }
-            var callbackUrl = string.Format("http://{0}/{1}", Common.Domain, Url.Action("other_call_events", "Events"));
+            catch (BandwidthException ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
             await Call.Create(new Dictionary<string, object>
             {
-                {"from", payload.From},
-                {"to", payload.To},
+                {"from", Common.SecondMemberNumber},
+                {"to", Common.ReserveConferenceNumber},
                 {"callbackUrl", callbackUrl},
-                {"recordingEnabled", false}
+                {"recordingEnabled", false},
+                {"tag", Common.ConferenceNumber}
             });
             return new HttpStatusCodeResult(HttpStatusCode.Created);
         }
@@ -53,9 +68,5 @@ namespace ChaosConference.Controllers
        public string To { get; set; }
     }
 
-    public class JoinPayload
-    {
-        public string From { get; set; }
-        public string To { get; set; }
-    }
+
 }

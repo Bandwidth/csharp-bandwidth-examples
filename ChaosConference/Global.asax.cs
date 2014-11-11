@@ -15,7 +15,7 @@ namespace ChaosConference
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes); 
             Common.SetupClient();
-            Trace.Listeners.Add(new IisTraceListener());
+            //Trace.Listeners.Add(new IisTraceListener());
             Trace.Listeners.Add(new ConsoleTraceListener());
         }
     }

@@ -19,7 +19,7 @@ namespace ChaosConference.Lib
 
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
-            if (ev.Status != "done") return;
+            if (ev.Status != "done" || ev.Tag == "notification") return;
             var call = new Call{Id = ev.CallId};
             var conferenceUrl = string.Format("http://{0}{1}", Common.Domain, url.Action("Conference", "Events"));
             var conference = await Conference.Create(new Dictionary<string, object>
@@ -47,7 +47,7 @@ namespace ChaosConference.Lib
         public static async Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
             var call = new Call{Id = ev.CallId};
-            var conferenceId = context.Application.Get(string.Format("active-conf-{0}", call.To)) as string;
+            var conferenceId = context.Application.Get(string.Format("active-conf-{0}", ev.Tag)) as string;
             if (conferenceId != null)
             {
                 await
@@ -70,8 +70,12 @@ namespace ChaosConference.Lib
             }
             else
             {
+                if (ev.Tag == "notification")
+                {
+                    return;
+                }
                 var conferenceId = ev.Tag.Split(':').LastOrDefault();
-                var conference = await Conference.Get(conferenceId);
+                var conference = new Conference{Id = conferenceId};
                 await conference.CreateMember(new Dictionary<string, object>
                 {
                     {"callId", call.Id},
@@ -103,9 +107,17 @@ namespace ChaosConference.Lib
 
         public static async Task ProcessEvent(ConferenceMemberEvent ev, UrlHelper url, HttpContextBase context)
         {
-            if (ev.Status != "done") return;
-            var call = new Call{Id = ev.CallId};
-            await call.SpeakSentence(string.Format("You are the {0} caller to join the conference.", ToOrdinalNumber(ev.ActiveMembers)), "notification");
+            if (ev.State != "active" || ev.ActiveMembers < 2) return; //don't speak anything to conference owner (first member)
+            var conference = new Conference{Id = ev.ConferenceId};
+            var member = await conference.GetMember(ev.MemberId);
+            await member.PlayAudio(new Dictionary<string, object>
+            {
+                {"gender", "female"},
+                {"locale", "en_US"},
+                {"voice", "kate"},
+                {"sentence", string.Format("You are the {0} caller to join the conference.", ToOrdinalNumber(ev.ActiveMembers))},
+                {"tag", "notification"}
+            });
         }
 
         private static string ToOrdinalNumber(int count)
@@ -116,7 +128,7 @@ namespace ChaosConference.Lib
             }
             return Ordinals[count];
         }
-        private static readonly string[] Ordinals = {"owner", "first", "second", "third", "fourth", "fifth"};
+        private static readonly string[] Ordinals = {"", "first", "second", "third", "fourth", "fifth"};
 
         public static Task ProcessEvent(BaseEvent ev, UrlHelper url, HttpContextBase context)
         {
