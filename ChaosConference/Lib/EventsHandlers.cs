@@ -14,12 +14,14 @@ namespace ChaosConference.Lib
         public async static Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
             var call = new Call{Id = ev.CallId};
+            Trace.WriteLine("FirstMember-AnswerEvent", "Events");
             await call.SpeakSentence("Welcome to the conference");
         }
 
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done" || ev.Tag == "notification") return;
+            Trace.WriteLine("FirstMember-SpeakEvent", "Events");
             var call = new Call{Id = ev.CallId};
             var conferenceUrl = string.Format("http://{0}{1}", Common.Domain, url.Action("Conference", "Events"));
             var conference = await Conference.Create(new Dictionary<string, object>
@@ -46,6 +48,7 @@ namespace ChaosConference.Lib
     {
         public static async Task ProcessEvent(AnswerEvent ev, UrlHelper url, HttpContextBase context)
         {
+            Trace.WriteLine("Other-AnswerEvent", "Events");
             var call = new Call{Id = ev.CallId};
             var conferenceId = context.Application.Get(string.Format("active-conf-{0}", ev.Tag)) as string;
             if (conferenceId != null)
@@ -63,6 +66,7 @@ namespace ChaosConference.Lib
         public async static Task ProcessEvent(SpeakEvent ev, UrlHelper url, HttpContextBase context)
         {
             if (ev.Status != "done") return;
+            Trace.WriteLine("Other-SpeakEvent", "Events");
             var call = new Call{Id = ev.CallId};
             if (ev.Tag == "terminating")
             {
@@ -94,6 +98,7 @@ namespace ChaosConference.Lib
     {
         public static async Task ProcessEvent(ConferenceEvent ev, UrlHelper url, HttpContextBase context)
         {
+            Trace.WriteLine(string.Format("Conference-Conference {0}", ev.Id), "Events");
             var conference = await Conference.Get(ev.ConferenceId);
             if (ev.Status == "created")
             {
@@ -110,6 +115,7 @@ namespace ChaosConference.Lib
             if (ev.State != "active" || ev.ActiveMembers < 2) return; //don't speak anything to conference owner (first member)
             var conference = new Conference{Id = ev.ConferenceId};
             var member = await conference.GetMember(ev.MemberId);
+            Trace.WriteLine(string.Format("Conference-ConferenceMember {0}", ev.ActiveMembers), "Events");
             await member.PlayAudio(new Dictionary<string, object>
             {
                 {"gender", "female"},
