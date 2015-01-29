@@ -25,7 +25,7 @@ namespace SipApp.Controllers
             return Json(new object());
         }
 
-        // POST: events/calls
+        // POST: events/bridged
         [HttpPost, ExtractEvent]
         public async Task<ActionResult> Bridged()
         {

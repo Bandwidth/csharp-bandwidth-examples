@@ -6,9 +6,11 @@ namespace SipApp.Lib
     public static class Common
     {
 
-        public static readonly string Caller = Environment.GetEnvironmentVariable("CALLER_NUMBER") ?? ConfigurationManager.AppSettings["callerNumber"];
-        
         public static readonly string Domain = Environment.GetEnvironmentVariable("DOMAIN") ?? ConfigurationManager.AppSettings["domain"];
+        public static string SipUri { get; set; }
+        public static string PhoneNumberForIncomingCalls { get; set; }
+        public static string Caller { get; set; }
+
         public static void SetupClient()
         {
             SetValue("BANDWIDTH_USER_ID", "userId");
