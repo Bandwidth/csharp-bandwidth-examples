@@ -1,6 +1,6 @@
-# Dolphin App
+# Sip App
 
-A Simple App that shows how to use DTMF, audio and speaking in a call
+A simple App  which allows to make calls directly to sip account, redirect outgoing calls from sip account to another number, redirect incoming calls from specific number to sip accountl
 
 
 ## Getting started
@@ -22,9 +22,9 @@ git clone https://github.com/bandwidthcom/csharp-bandwidth-examples
 ```
 Open solution file in Visual Studio and make "Rebuid all"
 
-Fill app settings (you can find them in web.config.sample bellow comment `Fill settings here`)
+Fill app settings (they are started from ENTER_XXX_HERE)
 
-Click right button on project "DolphinApp" in Visual Studio and select menu item "Publish"
+Click right button on project "SipnApp" in Visual Studio and select menu item "Publish"
 
 ![](/images/select-target.png)
 
@@ -42,13 +42,10 @@ Press "Publish" to deploy this app to created site.
 
 After publishing browser with site will be started. Please check if it shows text "This app is ready to use"
 
-![](/images/ready.png)
+
 
 
 ## Demo
 
-Start incoming call from command line:
-
-```console
-curl -d '{"to": "+YOUR-NUMBER"}' http://YOUR-AZURE-DOMAIN/start/demo --header "Content-Type:application/json"
-```
+Open site in web browser and follow to instructions on the start page.
+First loading of start page can require a lot of time (it will create an application, a domain, an endpoint, 2 phone numbers).
