@@ -43,7 +43,7 @@
   <ItemGroup>
     <Reference Include="Bandwidth.Net, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\csharp-bandwidth\Bandwidth.Net\bin\Debug\Bandwidth.Net.dll</HintPath>
+      <HintPath>..\packages\Bandwidth.Net.2.2\lib\net45\Bandwidth.Net.dll</HintPath>
     </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2.1\lib\Elmah.dll</HintPath>
