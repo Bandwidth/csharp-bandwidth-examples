@@ -24,7 +24,7 @@ Open solution file in Visual Studio and make "Rebuid all"
 
 Fill app settings (they are started from ENTER_XXX_HERE)
 
-Click right button on project "SipnApp" in Visual Studio and select menu item "Publish"
+Click right button on project "SipApp" in Visual Studio and select menu item "Publish"
 
 ![](/images/select-target.png)
 
