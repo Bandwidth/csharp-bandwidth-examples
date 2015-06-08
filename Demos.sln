@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SipApp", "SipApp\SipApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallApp", "CallApp\CallApp.csproj", "{E25ABF96-0DCD-48F2-B0E3-8E4520A098BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranscriptionApp", "TranscriptionApp\TranscriptionApp.csproj", "{1F52D3BE-693C-4276-AA24-52546F96FE7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{E25ABF96-0DCD-48F2-B0E3-8E4520A098BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E25ABF96-0DCD-48F2-B0E3-8E4520A098BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E25ABF96-0DCD-48F2-B0E3-8E4520A098BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F52D3BE-693C-4276-AA24-52546F96FE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F52D3BE-693C-4276-AA24-52546F96FE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F52D3BE-693C-4276-AA24-52546F96FE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F52D3BE-693C-4276-AA24-52546F96FE7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
