@@ -11,7 +11,7 @@ namespace TranscriptionApp.Controllers
         public async Task<ActionResult> Admin()
         {
             Trace.WriteLine("Admin()", "Events");
-            await AdminEventHandler.ProcessEvent(ViewBag.Event, Url, HttpContext);
+            await AdminEventHandler.ProcessEvent(ViewBag.Event, Url, HttpContext, ViewBag);
             return Json(new object());
         }
 
@@ -19,7 +19,7 @@ namespace TranscriptionApp.Controllers
         public async Task<ActionResult> ExternalCall()
         {
             Trace.WriteLine("ExternalCall()", "Events");
-            await ExternalCallHandler.ProcessEvent(ViewBag.Event, Url, HttpContext);
+            await ExternalCallHandler.ProcessEvent(ViewBag.Event, Url, HttpContext, ViewBag);
             return Json(new object());
         }
     }

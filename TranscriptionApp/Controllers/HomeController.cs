@@ -13,13 +13,14 @@ namespace TranscriptionApp.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
         
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<ActionResult> Call(CallModel callModel)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());

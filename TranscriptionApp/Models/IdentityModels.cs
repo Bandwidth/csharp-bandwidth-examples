@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Bandwidth.Net.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Newtonsoft.Json;
 
 namespace TranscriptionApp.Models
 {
@@ -20,21 +20,40 @@ namespace TranscriptionApp.Models
             return userIdentity;
         }
 
-        [NotMapped]
-        public IList<string> ActiveCalls { get; set; }
+        public virtual IList<VoiceMessage> VoiceMessages { get; set; }
 
-        [Column("ActiveCalls")]
-        public string ActiveCallsSerialized
+        public virtual IList<ActiveCall> ActiveCalls { get; set; }
+
+        public string Greeting { get; set; }
+
+        public Task PlayGreeting(Call call)
         {
-            get
-            {
-                return JsonConvert.SerializeObject(ActiveCalls);
+            var data = new Dictionary<string, object>{{"tag", "greeting"}};
+            if(!string.IsNullOrEmpty(Greeting)){
+              data["fileUrl"] = Greeting;
             }
-            set
-            {
-                ActiveCalls = JsonConvert.DeserializeObject<IList<string>>(value);
+            else{
+              data["gender"] = "female";
+              data["locale"] = "en_US";
+              data["voice"] = "kate";
+              data["sentence"] = string.Format("You have reached the voice mailbox for {0}. Please leave a message at the beep", PhoneNumber);
             }
+            return call.PlayAudio(data);
         }
+    }
+
+    public class VoiceMessage
+    {
+        public string Url { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public virtual ApplicationUser User { get; set; }
+    }
+
+    public class ActiveCall
+    {
+        public string Id { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -48,5 +67,8 @@ namespace TranscriptionApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public IDbSet<ActiveCall> ActiveCalls { get; set; }
+        public IDbSet<VoiceMessage> VoiceMessages { get; set; } 
     }
 }

@@ -3,8 +3,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using Bandwidth.Net;
+using Bandwidth.Net.Model;
+using Microsoft.AspNet.Identity.Owin;
+using TranscriptionApp.Models;
 
 namespace TranscriptionApp.Lib
 {
@@ -19,6 +23,20 @@ namespace TranscriptionApp.Lib
                 {
                     var json = reader.ReadToEnd();
                     var ev = BaseEvent.CreateFromString(json);
+                    var pi = ev.GetType().GetProperty("CallId");
+                    if (pi != null)
+                    {
+                        var call = new Call {Id = (string)pi.GetValue(ev)};
+                        var activeCall =
+                            filterContext.RequestContext.HttpContext.GetOwinContext()
+                                .Get<ApplicationDbContext>()
+                                .ActiveCalls.Find(call.Id);
+                        if (activeCall != null)
+                        {
+                            filterContext.Controller.ViewBag.User = activeCall.User;
+                        }
+                        filterContext.Controller.ViewBag.Call = call;
+                    }
                     filterContext.Controller.ViewBag.Event = ev;
                 }
             }
