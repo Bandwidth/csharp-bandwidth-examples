@@ -44,6 +44,7 @@ namespace TranscriptionApp.Models
 
     public class VoiceMessage
     {
+        public long Id { get; set; }
         public string Url { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }

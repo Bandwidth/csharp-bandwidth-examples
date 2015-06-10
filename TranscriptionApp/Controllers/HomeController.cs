@@ -14,8 +14,10 @@ namespace TranscriptionApp.Controllers
     public class HomeController : Controller
     {
         [Authorize]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            ViewBag.PhoneNumber = user.PhoneNumber;
             return View();
         }
 

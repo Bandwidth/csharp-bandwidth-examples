@@ -9,7 +9,7 @@ namespace TranscriptionApp.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(TranscriptionApp.Models.ApplicationDbContext context)

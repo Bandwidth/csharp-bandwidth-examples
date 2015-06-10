@@ -154,24 +154,35 @@ namespace TranscriptionApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var number = (await AvailableNumber.SearchLocal(new Dictionary<string, object>
-                    {
-                        {"city", "Cary"},
-                        {"state", "NC"}, 
-                        {"quantity", 1}
-                    })).First().Number;
-                await PhoneNumber.Create(new Dictionary<string, object>
-                    {
-                        {"number", number},
-                        {"applicationId", ApplicationId}
-                    });
-                user.PhoneNumber = number;
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    try
+                    {
+                        var number = (await AvailableNumber.SearchLocal(new Dictionary<string, object>
+                        {
+                            {"city", "Cary"},
+                            {"state", "NC"},
+                            {"quantity", 1}
+                        })).First().Number;
+                        await PhoneNumber.Create(new Dictionary<string, object>
+                        {
+                            {"number", number},
+                            {"applicationId", ApplicationId}
+                        });
+                        user.PhoneNumber = number;
+                        await UserManager.UpdateAsync(user);
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError("", ex);
+                        return View(model);
+                    }
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     return RedirectToAction("Index", "Home");
                 }
+
                 AddErrors(result);
             }
 
