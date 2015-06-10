@@ -3,10 +3,18 @@
 }
 
 <div class="row">
+    @if (TempData["Info"] != null)
+    {
+        <div class="alert alert-info">@TempData["Info"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-info">@TempData["Error"]</div>
+    }
     <form action="@Url.Action("Call")" method="POST" class="form-inline">
         <div class="form-group">
             <div class="input-group">
-                <input class="form-control" name="phoneNumber" placeholder="Number to call back from @ViewBag.PhoneNumber"/>
+                <input class="form-control" name="phoneNumber" placeholder="Number to call back from @ViewBag.PhoneNumber" value="+12522569207"/>
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-default">Call</button>
                 </span>

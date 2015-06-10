@@ -235,6 +235,7 @@ namespace TranscriptionApp.Lib
                 case "stop-recording":
                     await VoiceMailMenu(call);
                     break;
+                case "greeting":
                 case "main-menu":
                     await MainMenu(call);
                     break;
