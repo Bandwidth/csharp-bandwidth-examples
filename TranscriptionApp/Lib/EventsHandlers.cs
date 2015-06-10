@@ -231,11 +231,14 @@ namespace TranscriptionApp.Lib
                 case "remove-recording":
                     user.Greeting = null;
                     await dbContext.SaveChangesAsync();
+                    await VoiceMailMenu(call);
                     break;
                 case "stop-recording":
                     await VoiceMailMenu(call);
                     break;
                 case "greeting":
+                    await VoiceMailMenu(call);
+                    break;
                 case "main-menu":
                     await MainMenu(call);
                     break;
