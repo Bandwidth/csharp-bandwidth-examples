@@ -11,6 +11,9 @@ There are two examples of how to use the Bandwidth C# SDK to implement a server 
 
 [Sip App](./CallApp/README.md) is simple application which allows to make 2 callback calls and bridge them.
 
+[Transcription App](./TranscriptionApp/README.md) is simple voice mail app which sends email notifications to user with transcripted message text. It demonstrates how to make calls, handle incoming calls to registered number, handle events, tune on call recording, create a transcription for recording. Also it shows how to register an application on catapult and buy new phone number.
+
 The README for each project details how to build each project and deploy it to Azure.  Each README also shows how to invoke the demos using simple CURL commands.
+
 
 
