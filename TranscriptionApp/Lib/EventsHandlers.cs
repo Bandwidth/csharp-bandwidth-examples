@@ -58,11 +58,12 @@ namespace TranscriptionApp.Lib
 
         public static Task PlayVoiceMailMessage(ApplicationUser user, Call call, int index)
         {
-            var message = user.VoiceMessages[index];
-            if (message == null)
+            if (index < 0)
             {
                 return call.SpeakSentence("You have no voice messages", "main-menu");
             }
+            var message = user.VoiceMessages[index];
+            
             return call.SpeakSentence(
                 message.StartTime.ToLongDateString() + " " + message.StartTime.ToShortTimeString(),
                 "voice-message-date:" + index);
@@ -399,7 +400,7 @@ namespace TranscriptionApp.Lib
                     await
                         call.Update(new Dictionary<string, object>
                         {
-                            {"transcriptionEnabled", true},
+                            {"transcriptionEnabled", true}, //enable transcription of this call
                             {"recordingEnabled", true}
                         });
                     //press any key to stop recording (and call too)
