@@ -1,7 +1,7 @@
-## Catapult Example Applications
+## Bandwidth App Platform Example Applications
 ===
 
-There are two examples of how to use the [Bandwidth C# SDK](https://github.com/bandwidthcom/csharp-bandwidth) to implement a server application.  
+There are two examples of how to use the [Bandwidth C# SDK](https://github.com/bandwidthcom/csharp-bandwidth) and [Bandwidth's App Platform](http://ap.bandwidth.com/?utm_medium=social&utm_source=github&utm_campaign=dtolb&utm_content=) to implement a server application.  
 
 [Hello Flipper](./DolphinApp/README.md) demonstrates how to play audio, speak text to callers, and gather DTMF from the caller.
 
